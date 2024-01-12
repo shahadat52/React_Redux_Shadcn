@@ -1,4 +1,6 @@
 import { Button } from "../ui/button";
+import AddTodoModal from "./AddTodoModal";
+import TodoFilter from "./TodoFilter";
 import TodoCard from "./todoCard";
 
 const TodoContainer = () => {
@@ -6,8 +8,8 @@ const TodoContainer = () => {
         <div className="p-3">
             <h1 className="text-center py-3 text-2xl font-semibold">My Todo</h1>
             <div className="flex justify-between pb-2">
-                <Button className="bg-primary-gradient">Add Todo</Button>
-                <Button>Filter</Button>
+                <AddTodoModal />
+                <TodoFilter />
             </div>
             <div className="bg-primary-gradient h-full rounded-lg p-[5px] space-y-2">
                 <div className="bg-white rounded-lg">
