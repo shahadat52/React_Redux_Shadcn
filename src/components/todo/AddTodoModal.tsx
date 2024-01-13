@@ -1,19 +1,33 @@
+import { FormEvent } from 'react'
 import { useState } from 'react'
 import { Button } from "../ui/button";
-import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog";
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
+import { useAppDispatch } from '@/redux/hooks';
+import { TTodo, addTodo } from '@/redux/features/todoSlice';
 
 
 
 const AddTodoModal = () => {
     const [task, setTask] = useState('')
     const [description, setDescription] = useState('')
+    const dispatch = useAppDispatch()
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: FormEvent) => {
         e.preventDefault()
-        console.log({ task, description });
+
+        const id = Math.floor(10000000 + Math.random() * 90000000).toString();
+        // const id = Math.random().toString(36)
+        const todoInfo: TTodo = {
+            id,
+            task,
+            description
+        }
+        dispatch(addTodo(todoInfo))
     }
+
+   
 
     return (
         <Dialog>
@@ -46,7 +60,7 @@ const AddTodoModal = () => {
                     </div>
                     <div className='flex justify-end'>
                         <DialogClose asChild>
-                            <Button type="submit">Save changes</Button>
+                            <Button type="submit">ADD TASK</Button>
                         </DialogClose>
                     </div>
                 </form>
