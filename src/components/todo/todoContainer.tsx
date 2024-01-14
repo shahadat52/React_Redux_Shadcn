@@ -1,16 +1,22 @@
-import { useAppSelector } from "@/redux/hooks";
+// import { useAppSelector } from "@/redux/hooks";
 import AddTodoModal from "./AddTodoModal";
 import TodoFilter from "./TodoFilter";
 import TodoCard from "./todoCard";
 import { TTodo } from "@/redux/features/todoSlice";
+import { useGetTodosQuery } from "@/redux/api/api";
 
 export type TTodoCartProps = {
     key: string,
     todo: TTodo
 }
-const TodoContainer = () => {
 
-    const { todos } = useAppSelector(state => state.todos)
+const TodoContainer = () => {
+    const { data, isLoading, isError } = useGetTodosQuery(undefined)
+    if (isLoading) {
+        return <p>Loading------</p>
+    }
+    const todos = data.data
+    // const { todos } = useAppSelector(state => state.todos)
     const sortingArr = [...todos].sort((a, b) => (a.isCompleted) - (b.isCompleted))
     return (
         <div className="p-3">
