@@ -31,7 +31,7 @@ const TodoContainer = () => {
 
                         {
                             sortingArr?.length ? sortingArr.map(todo => <TodoCard
-                                key={todo.id}
+                                key={todo._id}
                                 todo={todo} />) : <div className="text-center bg-white w-full rounded-md "> <p className="p-2">There is no task pending</p></div>
                         }
                     </div>

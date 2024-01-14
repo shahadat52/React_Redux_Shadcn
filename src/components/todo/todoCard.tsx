@@ -4,26 +4,34 @@ import { TTodoCartProps } from "./todoContainer";
 import { deleteTask, toggleCompleted } from "@/redux/features/todoSlice";
 
 const TodoCard = ({ todo }: TTodoCartProps) => {
-    const { task, description, id, isCompleted } = todo
+    const { task, description, id, isCompleted, priority } = todo
     const dispatch = useAppDispatch()
 
     const handleToggleCompleted = (id: string) => {
         dispatch(toggleCompleted(id))
     }
     return (
-        <div className=" flex justify-between border rounded-lg p-2 mb-3 ">
+        <div className=" flex justify-between border rounded-lg p-2 items-center mb-3 ">
             <input onChange={() => handleToggleCompleted(id)} type="checkbox" name="complete" value="complete" id="" />
-            <h2 className="font-semibold my-auto">{task}</h2>
-            <p className="my-auto">Time</p>
-            <p className="my-auto">{description}</p>
+            <h2 className="flex-1 ml-2 font-semibold my-auto">{task}</h2>
+            <div className={`size-3 rounded-full px-auto flex justify-center items-center  
+            ${priority === 'medium' ? 'bg-yellow-500' : null}
+            ${priority === 'high' ? 'bg-red-500' : null}
+            ${priority === 'low' ? 'bg-green-500' : null}`}>
+
+            </div>
+            <p className={`my-auto flex-1 ml-2 
+            `}>{priority}</p>
             {
-                isCompleted ? <p className="font-semibold text-green-500 my-auto">Done</p> : <p className="font-semibold text-red-500 my-auto">Pending</p>
+                isCompleted ? <p className="font-semibold text-green-500 my-auto flex-1">Done</p> : <p className="font-semibold flex-1 text-red-500 my-auto">Pending</p>
             }
+            <p className="my-auto flex-1 mr-5">{description}</p>
+
             <div className="space-x-3">
                 <Button className="bg-red-500">
                     <svg
                         onClick={() => dispatch(deleteTask(id))}
-                        className="size-5"
+                        className="size-5 flex-1"
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
@@ -37,7 +45,7 @@ const TodoCard = ({ todo }: TTodoCartProps) => {
                 </Button>
                 <Button>
                     <svg
-                        className="size-5"
+                        className="size-5 flex-1"
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none" viewBox="0 0 24 24"
                         strokeWidth="1.5" stroke="currentColor" >

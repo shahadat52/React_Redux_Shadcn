@@ -4,6 +4,7 @@ export type TTodo = {
     id: string;
     task: string;
     description: string,
+    priority: string,
     isCompleted?: false
 }
 
