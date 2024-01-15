@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit/react"
 
 export type TTodo = {
+    _id?: string
     id: string;
     task: string;
     description: string,

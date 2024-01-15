@@ -1,12 +1,15 @@
 import { useAppDispatch } from "@/redux/hooks";
 import { Button } from "../ui/button";
 import { TTodoCartProps } from "./todoContainer";
-import { deleteTask, toggleCompleted } from "@/redux/features/todoSlice";
+import { toggleCompleted } from "@/redux/features/todoSlice";
+import { useDeleteTodoMutation } from "@/redux/api/api";
 
 const TodoCard = ({ todo }: TTodoCartProps) => {
-    const { task, description, id, isCompleted, priority } = todo
+    const { task, description, _id, id, isCompleted, priority } = todo
+    console.log({ _id });
     const dispatch = useAppDispatch()
-
+    const [deleteTask, result] = useDeleteTodoMutation()
+    console.log({ result });
     const handleToggleCompleted = (id: string) => {
         dispatch(toggleCompleted(id))
     }
@@ -30,7 +33,7 @@ const TodoCard = ({ todo }: TTodoCartProps) => {
             <div className="space-x-3">
                 <Button className="bg-red-500">
                     <svg
-                        onClick={() => dispatch(deleteTask(id))}
+                        onClick={() => deleteTask(_id)}
                         className="size-5 flex-1"
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"

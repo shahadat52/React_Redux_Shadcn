@@ -15,9 +15,9 @@ const TodoContainer = () => {
     if (isLoading) {
         return <p>Loading------</p>
     }
-    const todos = data.data
+    const todos = data?.data
     // const { todos } = useAppSelector(state => state.todos)
-    const sortingArr = [...todos].sort((a, b) => (a.isCompleted) - (b.isCompleted))
+    const sortingArr = todos && [...todos]?.sort((a, b) => (a.isCompleted) - (b.isCompleted))
     return (
         <div className="p-3">
             <h1 className="text-center py-3 text-2xl font-semibold">My Todo</h1>
