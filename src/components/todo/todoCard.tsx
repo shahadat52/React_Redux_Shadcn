@@ -1,19 +1,42 @@
-import { useAppDispatch } from "@/redux/hooks";
 import { Button } from "../ui/button";
+import UpdateModal from "./UpdateModal";
 import { TTodoCartProps } from "./todoContainer";
-import { toggleCompleted } from "@/redux/features/todoSlice";
-import { useDeleteTodoMutation } from "@/redux/api/api";
+import { useDeleteTodoMutation, useStatusUpdateMutation } from "@/redux/api/api";
 
 const TodoCard = ({ todo }: TTodoCartProps) => {
     const { task, description, _id, id, isCompleted, priority } = todo
-    const dispatch = useAppDispatch()
+    // const dispatch = useAppDispatch()
+
+
     const [deleteTask, result] = useDeleteTodoMutation()
+    const [statusUpdate, updateResult] = useStatusUpdateMutation()
+
     const handleToggleCompleted = (id: string) => {
-        dispatch(toggleCompleted(id))
+        const updateData = {
+            task,
+            description,
+            id,
+            priority,
+            isCompleted: !isCompleted
+        }
+        const option = {
+            _id,
+            updateData
+        }
+        statusUpdate(option)
+
+        // dispatch(toggleCompleted(id))
     }
     return (
         <div className=" flex justify-between border rounded-lg p-2 items-center mb-3 ">
-            <input onChange={() => handleToggleCompleted(id)} type="checkbox" name="complete" value="complete" id="" />
+            <input
+                defaultChecked={isCompleted}
+                onChange={() => handleToggleCompleted(id)}
+                type="checkbox"
+                name="complete"
+                value="complete"
+                id=""
+            />
             <h2 className="flex-1 ml-2 font-semibold my-auto">{task}</h2>
             <div className={`size-3 rounded-full px-auto flex justify-center items-center  
             ${priority === 'medium' ? 'bg-yellow-500' : null}
@@ -44,16 +67,7 @@ const TodoCard = ({ todo }: TTodoCartProps) => {
                     </svg>
 
                 </Button>
-                <Button>
-                    <svg
-                        className="size-5 flex-1"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none" viewBox="0 0 24 24"
-                        strokeWidth="1.5" stroke="currentColor" >
-                        <path strokeLinecap="round" strokeLinejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
-                    </svg>
-
-                </Button>
+                <UpdateModal key={_id} todo={todo} />
             </div>
         </div>
     );

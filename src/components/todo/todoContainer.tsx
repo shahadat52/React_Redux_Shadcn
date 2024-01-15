@@ -12,6 +12,7 @@ export type TTodoCartProps = {
 
 const TodoContainer = () => {
     const [priority, setPriority] = useState('')
+    //data get korar somoy hook ke evabe call korte hobe
     const { data, isLoading, isError } = useGetTodosQuery(priority)
     if (isLoading) {
         return <p>Loading------</p>
@@ -19,7 +20,6 @@ const TodoContainer = () => {
     const todos = data?.data
     // const { todos } = useAppSelector(state => state.todos)
     const sortingArr = todos && [...todos]?.sort((a, b) => (a.isCompleted) - (b.isCompleted))
-    console.log({priority});
     return (
         <div className="p-3">
             <h1 className="text-center py-3 text-2xl font-semibold">My Todo</h1>
