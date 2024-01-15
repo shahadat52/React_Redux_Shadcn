@@ -6,10 +6,8 @@ import { useDeleteTodoMutation } from "@/redux/api/api";
 
 const TodoCard = ({ todo }: TTodoCartProps) => {
     const { task, description, _id, id, isCompleted, priority } = todo
-    console.log({ _id });
     const dispatch = useAppDispatch()
     const [deleteTask, result] = useDeleteTodoMutation()
-    console.log({ result });
     const handleToggleCompleted = (id: string) => {
         dispatch(toggleCompleted(id))
     }

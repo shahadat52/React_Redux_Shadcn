@@ -1,4 +1,4 @@
-// import { useAppSelector } from "@/redux/hooks";
+import { useState } from 'react'
 import AddTodoModal from "./AddTodoModal";
 import TodoFilter from "./TodoFilter";
 import TodoCard from "./todoCard";
@@ -11,19 +11,21 @@ export type TTodoCartProps = {
 }
 
 const TodoContainer = () => {
-    const { data, isLoading, isError } = useGetTodosQuery(undefined)
+    const [priority, setPriority] = useState('')
+    const { data, isLoading, isError } = useGetTodosQuery(priority)
     if (isLoading) {
         return <p>Loading------</p>
     }
     const todos = data?.data
     // const { todos } = useAppSelector(state => state.todos)
     const sortingArr = todos && [...todos]?.sort((a, b) => (a.isCompleted) - (b.isCompleted))
+    console.log({priority});
     return (
         <div className="p-3">
             <h1 className="text-center py-3 text-2xl font-semibold">My Todo</h1>
             <div className="flex justify-between pb-2">
                 <AddTodoModal />
-                <TodoFilter />
+                <TodoFilter setPriority={setPriority} priority = {priority} />
             </div>
             <div className="bg-primary-gradient h-full rounded-lg p-[5px] space-y-2">
                 <div className="bg-white rounded-lg">

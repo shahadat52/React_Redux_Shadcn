@@ -4,7 +4,6 @@ import { Button } from "../ui/button";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-import { useAppDispatch } from '@/redux/hooks';
 import { TTodo } from '@/redux/features/todoSlice';
 import { useAddTodoMutation } from '@/redux/api/api';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
@@ -18,7 +17,6 @@ const AddTodoModal = () => {
     // const dispatch = useAppDispatch()
     const [addTodo, result] = useAddTodoMutation()
 
-    console.log({ result });
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault()
 
@@ -31,7 +29,6 @@ const AddTodoModal = () => {
             isCompleted: false,
             priority
         }
-        console.log('inside modal ==>', todoInfo);
         // dispatch(addTodo(todoInfo))
         addTodo(todoInfo)
     }
